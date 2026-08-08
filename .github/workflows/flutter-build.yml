@@ -1,6 +1,7 @@
-name: Build the flutter version of the RustDesk
+name: Build flutter Windows Client1
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       upload-artifact:
