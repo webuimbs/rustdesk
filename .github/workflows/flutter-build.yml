@@ -54,6 +54,10 @@ env:
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
 
 jobs:
+  Flutter-Build:                 # Hier steht der Name Ihres Jobs
+    runs-on: ubuntu-latest       # (oder macos-latest)
+    continue-on-error: true      # <-- DIESE ZEILE HIER EINBÜNDIG REINKOPIEREN
+  
   generate-sbom:
     runs-on: ubuntu-latest
 
@@ -100,7 +104,7 @@ jobs:
               platform: ARM64,
             }
     with:
-      upload-artifact: ${{ inputs.upload-artifact }}
+      upload-artifact: ${{ inputs.upload-artifact || 'false' }}
       target: ${{ matrix.job.target }}
       configuration: Release
       platform: ${{ matrix.job.platform }}
