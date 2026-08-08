@@ -1,4 +1,4 @@
-name: Flutter Build3
+name: Flutter Build 3
 
 on:
   workflow_dispatch:
@@ -65,6 +65,24 @@ jobs:
       contents: write
 
     steps:
+          - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. SCHRITT: Cache prüfen und laden
+      - name: Flutter Pub Cache laden
+        id: flutter-pub-cache                       # Wichtig: ID wird für die Prüfung gebraucht
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache                        # Der Pfad, wo Flutter Pakete speichert
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      # 2. SCHRITT: Installation ÜBERSPRINGEN, wenn im Cache gefunden
+      - name: Installiere Flutter Abhängigkeiten
+        # Diese Zeile prüft, ob der Cache da ist. Wenn ja, wird der Schritt ÜBERSPRUNGEN!
+        if: steps.flutter-pub-cache.outputs.cache-hit != 'true'
+        run: flutter pub get
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           submodules: recursive
