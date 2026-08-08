@@ -1,4 +1,4 @@
-name: Flutter Build 3
+name: Flutter Build
 
 on:
   workflow_dispatch:
