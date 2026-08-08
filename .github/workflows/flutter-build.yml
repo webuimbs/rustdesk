@@ -1,4 +1,4 @@
-name: Build flutter Windows Client1
+name: Flutter Build
 
 on:
   workflow_dispatch:
